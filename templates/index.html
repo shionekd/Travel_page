@@ -1,0 +1,47 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Travel Page
+{% endblock %}
+
+{% block main %}
+    <div class="container text-center">
+        <div class="row">
+            <div class="col">
+                <h3 class="font-txt">{{ username }}'s Travel Page</h3>
+            </div>
+        </div>
+        <div class="row">
+        <!-- <div class="row" style="margin-top: -15px;"> -->
+            <div class="col align-self-center">
+                <img class="earth_img" src="./static/img/earth.png" alt="earth">
+            </div>
+            <div class="col" style="margin-top: 100px;">
+                <div class="row justify-content-evenly">
+                    <div class="col-2">
+                        <img class="flag-img-s" src="./static/img/flags/Japan.png" alt="Japan">
+                    </div>
+                    <div class="col-10">
+                        <img class="flag-img-s mb-4" src="./static/img/flags/Sweden.png" alt="Sweden">
+                    </div>
+                </div>
+                <div class="row justify-content-evenly mt-4">
+                    <div class="col-4">
+                        <img class="flag-img ms-md-auto" src="./static/img/flags/France.png" alt="France">
+                    </div>
+                    <div class="col-4 mt-5">
+                        <img class="flag-img " src="./static/img/flags/Canada.png" alt="Canada">
+                    </div>
+                </div>
+                <div class="row">
+                    <img class="flag-img offset-md-3" src="./static/img/flags/United-States-of-America.png" alt="earth">
+                </div>
+            </div>
+        </div>
+        <!-- <div class="row" style="margin-bottom: -20px;">
+            <div class="col">
+                <a class="btn btn-success btn-lg" href="/" role="button">ENTER</a>
+            </div>
+        </div> -->
+    </div>
+{% endblock %}

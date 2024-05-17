@@ -1,0 +1,159 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Travel Page
+{% endblock %}
+
+{% block main %}
+    <div class="container text-cente">
+        <div class="row mb-5">
+            <div class="col">
+                <h3 class="font-txt">{{ wish_dict.username }}'s Wish Page</h3>
+            </div>
+        </div>
+        <div class="mt-5">
+            <p>Please update your travel wish list.</p>
+        </div>
+        <div class="containerA mt-5">
+            <div class="background-pink">
+            </div>
+            <div class="contents">
+                <form class="wish_form" action="/wish" method="post">
+                    <div class="row">
+                        <div class="col">
+                            <h5 class="title_font">WHEN</h5>
+                        </div>
+                    </div>
+                    <!-- <div class="container text-center"> -->
+                    <div class="row second_title text-center">
+                      <div class="col-3">
+                        <p>YEAR</p>
+                      </div>
+                      <div class="col-3">
+                        <input autocomplete="off" autofocus class="form-control input_size" name="year" placeholder="year" type="number" min="{{ wish_dict.this_year }}">
+                      </div>
+                      <div class="col-1">
+                        <p>SEASON</p>
+                      </div>
+                      <div class="col-3" style="text-align: left; margin-left: 50px;">
+                        <select class="form-select input_size" aria-label="Default select example" name="season" required>
+                          <option disabled　selected value="">select season</option>
+                          {% for season in wish_dict.seasons %}
+                              <option value="{{ season }}">{{ season }}</option>
+                          {% endfor %}
+                        </select>
+                      </div>
+                    </div>
+                    <!-- </div> -->
+                    <div class="row">
+                      <div class="col">
+                          <h5 class="title_font">WHERE</h5>
+                      </div>
+                    </div>
+                    <!-- <div class="container text-center"> -->
+                    <div class="row second_title text-center">
+                      <div class="col-3">
+                        <p>REGION</p>
+                      </div>
+                      <div class="col-3" style="text-align: left;">
+                        <select id="slct1" class="form-select input_size"  aria-label="Default select example" name="region" required>
+                          <option  disabled　selected value="">select region</option>
+                        </select>
+                        <!-- <select class="form-select input_size" aria-label="Default select example" name="region" required>
+                          <option disabled　selected value="">select region</option>
+                          {% for region in wish_dict.regions_rows %}
+                              <option value="{{ region }}">{{ region.name }}</option>
+                          {% endfor %}
+                        </select> -->
+                      </div>
+                      <div class="col-1">
+                        <p>COUNTRY</p>
+                      </div>
+                      <div class="col-3" style="text-align: left; margin-left: 50px;">
+                        <select id="slct2" class="form-select input_size" aria-label="Default select example" name="country" required>
+                          <option disabled　selected value="">select region first</option>
+                        </select>
+                        <!-- <select class="form-select input_size" aria-label="Default select example" name="country" required>
+                          <option disabled　selected value="">select country</option>
+                          {% for row in wish_dict.country_rows %}
+                              <option value="{{ row }}">{{ row.name }}</option>
+                          {% endfor %}
+                        </select> -->
+                      </div>
+                    </div>
+                    <!-- </div> -->
+                    <div class="row">
+                      <div class="col">
+                          <h5 class="title_font">WHO WITH</h5>
+                      </div>
+                    </div>
+                    <!-- <div class="container text-center"> -->
+                    <div class="row second_title text-center">
+                      <div class="col-3">
+                        <p>GROUP</p>
+                      </div>
+                      <div class="col-3">
+                        <select class="form-select input_size" aria-label="Default select example" name="relationship" required>
+                          <option disabled　selected value="">select group</option>
+                          {% for row in wish_dict.relationship %}
+                              <option value="{{ row }}">{{ row }}</option>
+                          {% endfor %}
+                        </select>
+                      </div>
+                    <button class="btn btn-outline-secondary submit_btn" type="submit">Save</button>
+                  </div>
+                    <!-- </div> -->
+                </form>
+            </div>
+        </div>
+        <div class="mt-5">
+          <h4 class="title_font">My Travel Wish List</h4>
+          <table class="table table-hover">
+            <colgroup span="2"></colgroup>
+            <colgroup span="2"></colgroup>
+            <col>
+            <thead>
+                <tr>
+                    <th colspan="2" scope="colgroup">When</th>
+                    <th colspan="2" scope="colgroup">Where</th>
+                    <th colspan="1" scope="colgroup">Who</th>
+                </tr>
+                <tr>
+                  <th scope="col">year</th>
+                  <th scope="col">Season</th>
+                  <th scope="col">Region</th>
+                  <th scope="col">Country</th>
+                  <th scope="col">Relationship</th>
+                </tr>
+            </thead>
+            <tbody>
+              {% if db_date != "" %}
+                  {% for date in db_date %}
+                      <tr>
+                          <td>{{ date.year }}</td>
+                          <td>{{ date.season }}</td>
+
+                          {% for region in regions_date %}
+                            {% if date.region_id == region.id %}
+                              <td>{{ region.name }}</td>
+                            {% endif %}
+                          {% endfor %}
+
+                          {% for country in countries_date %}
+                            {% if date.country_id == country.id %}
+                              <td><img class="flag" src="{{ country.pass }}">{{ country.name }}</td>
+                            {% endif %}
+                          {% endfor %}
+
+                          <td>{{ date.with_who }}</td>
+                      </tr>
+                  {% endfor %}
+                {% endif %}
+            </tbody>
+        </table>
+        {% if msg != "" %}
+          <p>{{ msg }}</p>
+        {% endif %}
+        </div>
+    </div>
+{% endblock %}

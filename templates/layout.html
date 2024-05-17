@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="initial-scale=1, width=device-width">
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+        <link href="/static/favicon.png" rel="icon">
+        <link href="/static/styles.css" rel="stylesheet">
+
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Galada&family=Sofia&display=swap');
+        </style>
+
+        <title>Travel Page ✈︎ {% block title %}{% endblock %}</title>
+
+    </head>
+
+    <body>
+
+        <nav class="navbar navbar-expand-md" style="background-color: white;">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="/">Travel Page</span></a>
+                <button aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-bs-target="#navbar" data-bs-toggle="collapse" type="button">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbar">
+                    {% if session["user_id"] %}
+                        <ul class="navbar-nav me-auto mt-2">
+                            <li class="nav-item"><a class="nav-link" href="/wish">Travel Wish</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/travel">Travel Report List</a></li>
+                        </ul>
+                        <ul class="navbar-nav ms-auto mt-2">
+                            <li class="nav-item"><a class="nav-link" href="/change_password">Change Password</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/logout">Log Out</a></li>
+                        </ul>
+                    {% else %}
+                        <ul class="navbar-nav ms-auto mt-2">
+                            <li class="nav-item"><a class="nav-link" href="/register">Register</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/login">Log In</a></li>
+                        </ul>
+                    {% endif %}
+                </div>
+            </div>
+        </nav>
+
+        {% if get_flashed_messages() %}
+            <header>
+                <div class="alert alert-warning text-center" role="alert" style="margin-bottom: -35px;">
+                    {{ get_flashed_messages() | join(" ") }}
+                </div>
+            </header>
+        {% endif %}
+
+        <main class="container py-5 text-center">
+            {% block main %}{% endblock %}
+        </main>
+
+        <script>
+            var species = {1:"Africa", 2:"Asia", 3:"Europe", 4:"North America", 5:"Oceania", 6:"South America"};
+            // let species = ["Africa", "Asia", "Europe"];
+            var africa = {1:"Egypt", 2:"Morocco"};
+            // let Africa = ["Egypt", "Morocco"];
+            var asia = {3:"Cambodia", 4:"China", 5:"Hong Kong", 6:"Indonesia", 7:"Japan", 8:"Malaysia", 9:"Singapore", 10:"South Korea", 11:"Taiwan", 12:"Thailand", 13:"Vietnam"};
+            // let Asia = ["Cambodia", "China", "Hong Kong"];
+            var europe = {14:"Austria", 15:"Belgium", 16:"Denmark", 17:"Finland", 18:"France", 19:"Germany", 20:"Greece", 21:"Hungary", 22:"Iceland", 23:"Italy", 24:"Netherlands", 25:"Scotland", 26:"Spain", 27:"Sweden", 28:"Switzerland", 29:"United Kingdom"};
+            // let Europe = ["Austria", "Belgium", "Denmark"]
+            var northamerica = {30:"Canada", 31:"Cuba", 32:"Mexico", 33:"United States of America"};
+            var oceania = {34:"Australia", 35:"New Zealand"};
+            var southamerica = {36:"Argentina", 37:"Brazil", 38:"Chile"};
+
+            let slct1 = document.getElementById("slct1")
+            let slct2 = document.getElementById("slct2")
+
+            Object.keys(species).forEach( function(value) {
+                let option = document.createElement("option");
+                option.text = this[value];
+                option.value = value;
+                slct1.appendChild(option);
+            }, species)
+
+            // species.forEach(function addSpecies(item){
+            //     let option = document.createElement("option");
+            //     option.text = item;
+            //     option.value = item;
+            //     slct1.appendChild(option);
+            // });
+
+            slct1.onchange = function () {
+                old_selects = document.getElementById('slct2');
+                while(old_selects.lastChild)
+                {
+                    old_selects.removeChild(old_selects.lastChild);
+                }
+
+                if (this.value == 1){
+                    addToSlct2(africa);
+                }
+                if (this.value == 2){
+                    addToSlct2(asia);
+                }
+                if (this.value == 3){
+                    addToSlct2(europe);
+                }
+                if (this.value == 4){
+                    addToSlct2(northamerica);
+                }
+                if (this.value == 5){
+                    addToSlct2(oceania);
+                }
+                if (this.value == 6){
+                    addToSlct2(southamerica);
+                }
+            }
+
+            function addToSlct2(arr) {
+                Object.keys(arr).forEach( function(value) {
+                    let option = document.createElement("option");
+                    option.text = this[value];
+                    option.value = value;
+                    slct2.appendChild(option);
+                }, arr)
+                // arr.forEach(function (item) {
+                //     let option = document.createElement("option");
+                //     option.text = item;
+                //     option.value = item;
+                //     slct2.appendChild(option);
+                // });
+            }
+
+            const exampleModal = document.getElementById('exampleModal')
+            if (exampleModal) {
+            exampleModal.addEventListener('show.bs.modal', event => {
+                // Button that triggered the modal
+                const button = event.relatedTarget
+                // Extract info from data-bs-* attributes
+                const pass = button.getAttribute('data-bs-whatever')
+                console.log(pass)
+
+                let img = document.getElementById("image_place");
+                img.src = pass;
+            })
+            }
+        </script>
+    </body>
+</html>

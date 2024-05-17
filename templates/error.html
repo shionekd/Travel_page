@@ -1,0 +1,11 @@
+{% extends "layout.html" %}
+
+{% block title %}
+     {{ error_dict.num }} ERROR
+{% endblock %}
+
+{% block main %}
+    <h3 class="mt-5"> {{ error_dict.num }}ERROR</h3>
+    <p>{{ error_dict.msg }}</p>
+    <a href="/{{ error_dict.url }}" class="btn btn-outline-secondary btn-sm mt-3" type="button">Back to {{ error_dict.name }} Page</a>
+{% endblock %}
