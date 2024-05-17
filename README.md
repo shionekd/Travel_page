@@ -1,9 +1,5 @@
 # TRAVEL PAGE
 
-## Video Demo
-
-<https://youtu.be/ILW2e7kBqZM>
-
 ## Description
 
 This TRAVEL PAGE is my final project for CS50 !!
